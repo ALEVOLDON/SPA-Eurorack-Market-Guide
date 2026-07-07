@@ -79,7 +79,7 @@ export const channelsData = {
       desc: "Чешско-словацкий портал для музыкантов и любителей синтезаторов.",
       tags: ["CZ"],
       features: "Сделки чаще всего при личной встрече или отправке почтой с оплатой при получении.",
-      url: "http://www.midi.cz/"
+      url: "https://www.midi.cz/"
     },
     {
       name: "OLX.pl (PL)",
