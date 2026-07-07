@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eurorack Market Guide — Интерактивный гид по рынку б/у модулей</title>
+  <meta name="description" content="Полное руководство по покупке и продаже Eurorack модулей в Европе: калькулятор выгоды, рейтинг каналов, проверка безопасности и технический гид.">
+  <!-- Google Fonts Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-synth-bg-light dark:bg-synth-bg-dark text-stone-900 dark:text-stone-100 dot-grid transition-colors duration-300 min-h-screen pb-32">
+
+  <!-- Декоративная рама кейса сверху -->
+  <div class="h-2 bg-gradient-to-r from-stone-400 via-stone-300 to-stone-500 dark:from-stone-800 dark:via-stone-700 dark:to-stone-900 border-b border-stone-500 dark:border-stone-950"></div>
+
+  <div class="max-w-6xl mx-auto px-4 pt-8">
+    
+    <!-- Шапка приложения в виде лицевой панели главного модуля -->
+    <header class="relative border-2 border-synth-border-light dark:border-synth-border-dark bg-synth-panel-light dark:bg-synth-panel-dark rounded-xl p-6 mb-8 shadow-md">
+      <!-- Декоративные винты по углам панели -->
+      <div class="absolute top-2 left-2 w-3 h-3 rounded-full border border-stone-400 dark:border-stone-600 flex items-center justify-center"><div class="w-2 h-[1px] bg-stone-400 dark:bg-stone-600 rotate-45"></div></div>
+      <div class="absolute top-2 right-2 w-3 h-3 rounded-full border border-stone-400 dark:border-stone-600 flex items-center justify-center"><div class="w-2 h-[1px] bg-stone-400 dark:bg-stone-600 -rotate-45"></div></div>
+      <div class="absolute bottom-2 left-2 w-3 h-3 rounded-full border border-stone-400 dark:border-stone-600 flex items-center justify-center"><div class="w-2 h-[1px] bg-stone-400 dark:bg-stone-600 -rotate-45"></div></div>
+      <div class="absolute bottom-2 right-2 w-3 h-3 rounded-full border border-stone-400 dark:border-stone-600 flex items-center justify-center"><div class="w-2 h-[1px] bg-stone-400 dark:bg-stone-600 rotate-45"></div></div>
+
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500 led-glow-amber animate-pulse"></span>
+            <h1 class="text-3xl font-bold tracking-tight font-sans uppercase text-stone-800 dark:text-stone-100">Eurorack Market Guide</h1>
+          </div>
+          <p class="text-xs text-stone-500 dark:text-stone-400 uppercase tracking-widest mt-1">European Second-Hand Market Navigator // Model EMG-2026</p>
+        </div>
+
+        <div class="flex items-center gap-6">
+          <!-- Скевоморфный переключатель тем оформления -->
+          <div class="flex items-center gap-3 bg-stone-200 dark:bg-stone-800 p-2.5 rounded-lg border border-synth-border-light dark:border-synth-border-dark">
+            <span class="text-xs font-semibold uppercase tracking-wider text-stone-600 dark:text-stone-400">Theme:</span>
+            <button id="themeToggle" class="relative w-12 h-6 bg-stone-400 dark:bg-amber-600 rounded-full p-1 transition-colors duration-300 focus:outline-none">
+              <span id="themeToggleKnob" class="block w-4 h-4 bg-white rounded-full shadow-md transform transition-transform duration-300 translate-x-0 dark:translate-x-6"></span>
+            </button>
+            <span id="themeLed" class="w-2 h-2 rounded-full bg-stone-400 dark:bg-amber-500 dark:led-glow-amber transition-all duration-300"></span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- СЕКЦИЯ 1: ОБЗОР РЫНКА (MARKET OVERVIEW) -->
+    <section id="overview" class="relative border-2 border-synth-border-light dark:border-synth-border-dark bg-synth-panel-light dark:bg-synth-panel-dark rounded-xl p-6 mb-8 shadow-md">
+      <!-- Декоративные винты -->
+      <div class="absolute top-2 left-2 w-3 h-3 rounded-full border border-stone-400 dark:border-stone-600 flex items-center justify-center"><div class="w-2 h-[1px] bg-stone-400 dark:bg-stone-600 rotate-45"></div></div>
+      <div class="absolute top-2 right-2 w-3 h-3 rounded-full border border-stone-400 dark:border-stone-600 flex items-center justify-center"><div class="w-2 h-[1px] bg-stone-400 dark:bg-stone-600 -rotate-45"></div></div>
+      
+      <div class="border-b border-synth-border-light dark:border-synth-border-dark pb-4 mb-4">
+        <h2 class="text-xl font-bold uppercase tracking-wide text-amber-600 dark:text-amber-500 flex items-center gap-2">
+          <span>01 //</span> ОБЗОР РЫНКА EURORACK В ЕВРОПЕ
+        </h2>
+      </div>
+
+      <p class="text-sm text-stone-600 dark:text-stone-400 mb-6 leading-relaxed">
+        Вторичный рынок Eurorack в Европе — это высоколиквидная экосистема. Из-за физической прочности и долговечности аналоговых компонентов модули служат годами, регулярно переходя от одного владельца к другому. Средний уровень амортизации составляет всего 20-35% от цены нового модуля, что делает сборку б/у систем крайне выгодным решением. Понимание структуры рынка поможет вам находить редкие модули и возвращать до 95% стоимости при ротации вашего личного кейса.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-stone-100 dark:bg-stone-900 border border-synth-border-light dark:border-synth-border-dark rounded-lg p-4 flex flex-col justify-between">
+          <div class="text-xs uppercase tracking-wider text-stone-500 mb-2">Средняя ликвидность</div>
+          <div class="text-2xl font-bold text-stone-800 dark:text-stone-200">Высокая</div>
+          <div class="text-xs text-stone-500 mt-2">Популярные модули (Mutable, Make Noise, Intellijel) продаются за 2-5 дней.</div>
+        </div>
+        <div class="bg-stone-100 dark:bg-stone-900 border border-synth-border-light dark:border-synth-border-dark rounded-lg p-4 flex flex-col justify-between">
+          <div class="text-xs uppercase tracking-wider text-stone-500 mb-2">Сохранение стоимости</div>
+          <div class="text-2xl font-bold text-stone-800 dark:text-stone-200">65% – 85%</div>
+          <div class="text-xs text-stone-500 mt-2">Потери минимальны по сравнению с цифровыми синтезаторами и компьютерами.</div>
+        </div>
+        <div class="bg-stone-100 dark:bg-stone-900 border border-synth-border-light dark:border-synth-border-dark rounded-lg p-4 flex flex-col justify-between">
+          <div class="text-xs uppercase tracking-wider text-stone-500 mb-2">Главная опасность</div>
+          <div class="text-2xl font-bold text-red-500 dark:text-red-400">Переполюсовка</div>
+          <div class="text-xs text-stone-500 mt-2">Неправильное подключение питания — основная причина повреждения б/у плат.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 2: КАНАЛЫ ПРОДАЖ (SALES CHANNELS) -->
+    <section id="channels" class="relative border-2 border-synth-border-light dark:border-synth-border-dark bg-synth-panel-light dark:bg-synth-panel-dark rounded-xl p-6 mb-8 shadow-md">
+      <!-- Декоративные винты -->
+      <div class="absolute top-2 left-2 w-3 h-3 rounded-full border border-stone-400 dark:border-stone-600 flex items-center justify-center"><div class="w-2 h-[1px] bg-stone-400 dark:bg-stone-600 rotate-45"></div></div>
+      <div class="absolute top-2 right-2 w-3 h-3 rounded-full border border-stone-400 dark:border-stone-600 flex items-center justify-center"><div class="w-2 h-[1px] bg-stone-400 dark:bg-stone-600 -rotate-45"></div></div>
+
+      <div class="border-b border-synth-border-light dark:border-synth-border-dark pb-4 mb-6">
+        <h2 class="text-xl font-bold uppercase tracking-wide text-amber-600 dark:text-amber-500 flex items-center gap-2">
+          <span>02 //</span> КАНАЛЫ ПРОДАЖ И ПОКУПКИ
+        </h2>
+        <p class="text-xs text-stone-500 dark:text-stone-400 mt-1">Используйте фильтры и вкладки для выбора оптимального места проведения сделки. Наведите на теги для подсказок.</p>
+      </div>
+
+      <!-- Фильтры по тегам (Быстрые фильтры) -->
+      <div class="mb-6">
+        <span class="text-xs uppercase tracking-wider font-semibold text-stone-500 block mb-2">Быстрые фильтры (подсветить модули):</span>
+        <div class="flex flex-wrap gap-2" id="filterContainer">
+          <button data-filter="DE" class="tag-btn text-xs px-3 py-1.5 rounded border border-synth-border-light dark:border-synth-border-dark bg-stone-100 dark:bg-stone-900 hover:border-amber-500 transition-colors uppercase font-medium">DE (Германия)</button>
+          <button data-filter="IT" class="tag-btn text-xs px-3 py-1.5 rounded border border-synth-border-light dark:border-synth-border-dark bg-stone-100 dark:bg-stone-900 hover:border-amber-500 transition-colors uppercase font-medium">IT (Италия)</button>
+          <button data-filter="FR" class="tag-btn text-xs px-3 py-1.5 rounded border border-synth-border-light dark:border-synth-border-dark bg-stone-100 dark:bg-stone-900 hover:border-amber-500 transition-colors uppercase font-medium">FR (Франция)</button>
+          <button data-filter="ES" class="tag-btn text-xs px-3 py-1.5 rounded border border-synth-border-light dark:border-synth-border-dark bg-stone-100 dark:bg-stone-900 hover:border-amber-500 transition-colors uppercase font-medium">ES (Испания)</button>
+          <button data-filter="NL" class="tag-btn text-xs px-3 py-1.5 rounded border border-synth-border-light dark:border-synth-border-dark bg-stone-100 dark:bg-stone-900 hover:border-amber-500 transition-colors uppercase font-medium">NL (Нидерланды)</button>
+          <button data-filter="SE" class="tag-btn text-xs px-3 py-1.5 rounded border border-synth-border-light dark:border-synth-border-dark bg-stone-100 dark:bg-stone-900 hover:border-amber-500 transition-colors uppercase font-medium">SE (Швеция)</button>
+          <button data-filter="PL" class="tag-btn text-xs px-3 py-1.5 rounded border border-synth-border-light dark:border-synth-border-dark bg-stone-100 dark:bg-stone-900 hover:border-amber-500 transition-colors uppercase font-medium">PL (Польша)</button>
+          <button data-filter="CZ" class="tag-btn text-xs px-3 py-1.5 rounded border border-synth-border-light dark:border-synth-border-dark bg-stone-100 dark:bg-stone-900 hover:border-amber-500 transition-colors uppercase font-medium">CZ (Чехия)</button>
+          <button data-filter="B-stock" class="tag-btn text-xs px-3 py-1.5 rounded border border-synth-border-light dark:border-synth-border-dark bg-stone-100 dark:bg-stone-900 hover:border-amber-500 transition-colors uppercase font-medium">B-Stock</button>
+          <button data-filter="Warranty" class="tag-btn text-xs px-3 py-1.5 rounded border border-synth-border-light dark:border-synth-border-dark bg-stone-100 dark:bg-stone-900 hover:border-amber-500 transition-colors uppercase font-medium">Гарантия</button>
+          <button data-filter="Escrow" class="tag-btn text-xs px-3 py-1.5 rounded border border-synth-border-light dark:border-synth-border-dark bg-stone-100 dark:bg-stone-900 hover:border-amber-500 transition-colors uppercase font-medium">Эскроу</button>
+          <button data-filter="Forum" class="tag-btn text-xs px-3 py-1.5 rounded border border-synth-border-light dark:border-synth-border-dark bg-stone-100 dark:bg-stone-900 hover:border-amber-500 transition-colors uppercase font-medium">Форум</button>
+        </div>
+      </div>
+
+      <!-- Вкладки управления (Скевоморфный селектор) -->
+      <div class="flex border-b border-synth-border-light dark:border-synth-border-dark mb-6">
+        <button id="tab-retailers" class="tab-btn px-4 py-2.5 font-bold uppercase tracking-wider text-xs border-t-2 border-l-2 border-r-2 border-transparent text-stone-400 dark:text-stone-500 hover:text-stone-800 dark:hover:text-stone-200 transition-all duration-200">
+          Официальные Ритейлеры
+        </button>
+        <button id="tab-p2p" class="tab-btn px-4 py-2.5 font-bold uppercase tracking-wider text-xs border-t-2 border-l-2 border-r-2 border-transparent text-stone-400 dark:text-stone-500 hover:text-stone-800 dark:hover:text-stone-200 transition-all duration-200">
+          P2P Платформы
+        </button>
+        <button id="tab-regional" class="tab-btn px-4 py-2.5 font-bold uppercase tracking-wider text-xs border-t-2 border-l-2 border-r-2 border-transparent text-stone-400 dark:text-stone-500 hover:text-stone-800 dark:hover:text-stone-200 transition-all duration-200">
+          Региональные Доски
+        </button>
+      </div>
+
+      <!-- Контейнер карточек каналов -->
+      <div id="channelsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-opacity duration-300">
+        <!-- Генерируется динамически через JS -->
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 3: КАЛЬКУЛЯТОР ВЫГОДЫ И ГРАФИК (CALCULATOR & VISUALIZATION) -->
+    <section id="calculator" class="relative border-2 border-synth-border-light dark:border-synth-border-dark bg-synth-panel-light dark:bg-synth-panel-dark rounded-xl p-6 mb-8 shadow-md">
+      <!-- Декоративные винты -->
+      <div class="absolute top-2 left-2 w-3 h-3 rounded-full border border-stone-400 dark:border-stone-600 flex items-center justify-center"><div class="w-2 h-[1px] bg-stone-400 dark:bg-stone-600 rotate-45"></div></div>
+      <div class="absolute top-2 right-2 w-3 h-3 rounded-full border border-stone-400 dark:border-stone-600 flex items-center justify-center"><div class="w-2 h-[1px] bg-stone-400 dark:bg-stone-600 -rotate-45"></div></div>
+
+      <div class="border-b border-synth-border-light dark:border-synth-border-dark pb-4 mb-6">
+        <h2 class="text-xl font-bold uppercase tracking-wide text-amber-600 dark:text-amber-500 flex items-center gap-2">
+          <span>03 //</span> КАЛЬКУЛЯТОР ВЫГОДЫ И СРАВНЕНИЕ СПОСОБОВ ПРОДАЖИ
+        </h2>
+        <p class="text-xs text-stone-500 dark:text-stone-400 mt-1">Оцените потенциальную доходность сделки в зависимости от выбранного канала сбыта.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Левая часть: Калькулятор -->
+        <div class="lg:col-span-5 bg-stone-100 dark:bg-stone-900 border border-synth-border-light dark:border-synth-border-dark rounded-lg p-5">
+          <h3 class="text-xs uppercase tracking-widest font-bold text-stone-500 mb-4 border-b border-synth-border-light dark:border-synth-border-dark pb-2">Калькулятор окупаемости</h3>
+          
+          <div class="space-y-4">
+            <div>
+              <label class="block text-xs uppercase font-semibold text-stone-600 dark:text-stone-400 mb-1">Первоначальная цена нового (EUR):</label>
+              <input type="number" id="calcPrice" value="300" min="10" step="5" class="w-full bg-white dark:bg-stone-950 border border-synth-border-light dark:border-synth-border-dark rounded p-2 text-stone-800 dark:text-stone-100 font-medium focus:ring-1 focus:ring-amber-500 outline-none">
+            </div>
+
+            <div>
+              <label class="block text-xs uppercase font-semibold text-stone-600 dark:text-stone-400 mb-1">Состояние модуля:</label>
+              <select id="calcCondition" class="w-full bg-white dark:bg-stone-950 border border-synth-border-light dark:border-synth-border-dark rounded p-2 text-stone-800 dark:text-stone-100 font-medium focus:ring-1 focus:ring-amber-500 outline-none">
+                <option value="mint">Mint (Как новый, полная комплектация) — 90%</option>
+                <option value="excellent" selected>Excellent (Без царапин, коробка) — 80%</option>
+                <option value="good">Good (Есть царапины/rash, без коробки) — 70%</option>
+                <option value="poor">Poor (Плохое состояние, работает) — 50%</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs uppercase font-semibold text-stone-600 dark:text-stone-400 mb-1">Выбранный канал сбыта:</label>
+              <select id="calcChannel" class="w-full bg-white dark:bg-stone-950 border border-synth-border-light dark:border-synth-border-dark rounded p-2 text-stone-800 dark:text-stone-100 font-medium focus:ring-1 focus:ring-amber-500 outline-none">
+                <option value="buyout">Официальный выкуп (Выкуп наличными: 50%)</option>
+                <option value="tradein">Trade-in / Store Credit (Обмен: 65%)</option>
+                <option value="commission">Комиссия агента (Агент забирает: 20-25%)</option>
+                <option value="p2p">Прямая P2P продажа (Частное лицо: 95%)</option>
+              </select>
+            </div>
+
+            <!-- Доработки калькулятора -->
+            <div>
+              <label class="block text-xs uppercase font-semibold text-stone-600 dark:text-stone-400 mb-1">Стоимость доставки по ЕС (EUR):</label>
+              <input type="number" id="calcShipping" value="15" min="0" step="1" class="w-full bg-white dark:bg-stone-950 border border-synth-border-light dark:border-synth-border-dark rounded p-2 text-stone-800 dark:text-stone-100 font-medium focus:ring-1 focus:ring-amber-500 outline-none">
+            </div>
+
+            <label class="flex items-center gap-2 cursor-pointer mt-3">
+              <input type="checkbox" id="calcPaypal" class="accent-amber-500 h-4 w-4 rounded">
+              <span class="text-xs uppercase font-semibold text-stone-600 dark:text-stone-400">Учесть комиссию PayPal G&S (-3.4% + €0.35)</span>
+            </label>
+
+            <div class="border-t border-synth-border-light dark:border-synth-border-dark pt-4 mt-6">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-xs uppercase font-semibold text-stone-500">Базовая б/у стоимость:</span>
+                <span id="baseValueText" class="font-bold text-stone-700 dark:text-stone-300">€240.00</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-xs uppercase font-semibold text-stone-500">Ваша чистая выгода:</span>
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-green-500 led-glow-green"></span>
+                  <span id="netPayoutText" class="text-xl font-bold text-green-600 dark:text-green-400">€192.00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Правая часть: График Chart.js -->
+        <div class="lg:col-span-7 flex flex-col justify-between">
+          <div class="bg-stone-100 dark:bg-stone-900 border border-synth-border-light dark:border-synth-border-dark rounded-lg p-5">
+            <h3 class="text-xs uppercase tracking-widest font-bold text-stone-500 mb-4 border-b border-synth-border-light dark:border-synth-border-dark pb-2">Сравнение чистой выгоды (EUR)</h3>
+            <div class="relative w-full h-[250px] flex items-center justify-center">
+              <canvas id="profitChart"></canvas>
+            </div>
+          </div>
+          <p class="text-xs text-stone-500 mt-4 leading-relaxed">
+            * График пересчитывается автоматически. Комиссия за доставку и комиссия PayPal вычитаются только для P2P-продаж и комиссии агента в соответствии с условиями площадок.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 4: ТЕХНИЧЕСКИЙ ГИД И ШЛЕЙФ ПИТАНИЯ (TECHNICAL GUIDE) -->
+    <section id="technical" class="relative border-2 border-synth-border-light dark:border-synth-border-dark bg-synth-panel-light dark:bg-synth-panel-dark rounded-xl p-6 mb-8 shadow-md">
+      <!-- Декоративные винты -->
+      <div class="absolute top-2 left-2 w-3 h-3 rounded-full border border-stone-400 dark:border-stone-600 flex items-center justify-center"><div class="w-2 h-[1px] bg-stone-400 dark:bg-stone-600 rotate-45"></div></div>
+      <div class="absolute top-2 right-2 w-3 h-3 rounded-full border border-stone-400 dark:border-stone-600 flex items-center justify-center"><div class="w-2 h-[1px] bg-stone-400 dark:bg-stone-600 -rotate-45"></div></div>
+
+      <div class="border-b border-synth-border-light dark:border-synth-border-dark pb-4 mb-6">
+        <h2 class="text-xl font-bold uppercase tracking-wide text-amber-600 dark:text-amber-500 flex items-center gap-2">
+          <span>04 //</span> ТЕХНИЧЕСКИЙ ГИД И РИСКИ ПРИ ЭКСПЛУАТАЦИИ
+        </h2>
+        <p class="text-xs text-stone-500 dark:text-stone-400 mt-1">Обязательно изучите физические и электрические параметры модулей перед покупкой.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Левая колонка: Риски и вольтаж -->
+        <div class="lg:col-span-6 space-y-6">
+          <div class="bg-stone-100 dark:bg-stone-900 border border-synth-border-light dark:border-synth-border-dark rounded-lg p-5">
+            <h3 class="text-sm font-bold uppercase tracking-wide text-amber-600 dark:text-amber-500 mb-3">Главные технические риски</h3>
+            <ul class="space-y-3 text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
+              <li class="flex items-start gap-2">
+                <span class="text-red-500 font-bold">⚠️</span>
+                <span>
+                  <strong>Глубина кейса (Module Depth):</strong> Всегда проверяйте глубину модуля (измеряется в мм). Вы можете проверить размеры в официальной базе данных <a href="https://www.modulargrid.net/" target="_blank" class="text-amber-500 hover:underline font-bold">ModularGrid</a>.
+                </span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-red-500 font-bold">⚠️</span>
+                <span><strong>Специфика питания из США:</strong> Блоки питания кейсов из США рассчитаны на 110 В. При покупке американского кейса вам понадобится другой сетевой адаптер (220 В) или замена встроенного трансформатора. Сами модули питаются от внутренней шины ±12 В и полностью совместимы.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-red-500 font-bold">⚠️</span>
+                <span>
+                  <strong>Закрытые бренды (Discontinued):</strong> Mutable Instruments, WMD, Hexinverter закрыли производство. Для ремонта или скачивания оригинальных прошивок Mutable используйте <a href="https://mutable-instruments.net/" target="_blank" class="text-amber-500 hover:underline font-bold">Архив Mutable Instruments</a>. По всем вопросам ремонта рекомендуем обращаться на ветку форума <a href="https://www.modwiggler.com/forum/viewforum.php?f=17" target="_blank" class="text-amber-500 hover:underline font-bold">ModWiggler DIY</a>.
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Правая колонка: Интерактивный шлейф питания (Красная полоса) -->
+        <div class="lg:col-span-6">
+          <div class="bg-stone-100 dark:bg-stone-900 border border-synth-border-light dark:border-synth-border-dark rounded-lg p-5 flex flex-col justify-between h-full">
+            <div>
+              <div class="flex justify-between items-center mb-3">
+                <h3 class="text-sm font-bold uppercase tracking-wide text-amber-600 dark:text-amber-500">Симулятор питания (Red Stripe Warn)</h3>
+                <!-- LED Индикатор состояния симуляции -->
+                <span id="powerLed" class="w-3 h-3 rounded-full bg-stone-400 transition-all duration-300"></span>
+              </div>
+              <p class="text-xs text-stone-500 mb-4">
+                Красная полоса на шлейфе питания Eurorack обозначает шину -12V. Ошибка подключения может сжечь модуль. Протестируйте подключение перед включением питания питания!
+              </p>
+
+              <!-- Визуальная схема разъема питания модуля -->
+              <div class="border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-950 p-4 rounded-lg flex flex-col items-center gap-6 relative">
+                <!-- Коннектор на плате модуля -->
+                <div class="w-48 border-2 border-stone-800 dark:border-stone-500 p-2 rounded flex flex-col items-center bg-stone-900 relative">
+                  <span class="text-[9px] text-stone-400 uppercase tracking-widest mb-1">Module Pins (10-Pin)</span>
+                  <!-- Пины -->
+                  <div class="grid grid-cols-5 gap-2.5 my-1">
+                    <div class="w-2.5 h-2.5 border border-stone-600 bg-stone-800 rounded-full"></div>
+                    <div class="w-2.5 h-2.5 border border-stone-600 bg-stone-800 rounded-full"></div>
+                    <div class="w-2.5 h-2.5 border border-stone-600 bg-stone-800 rounded-full"></div>
+                    <div class="w-2.5 h-2.5 border border-stone-600 bg-stone-800 rounded-full"></div>
+                    <div class="w-2.5 h-2.5 border border-stone-600 bg-stone-800 rounded-full"></div>
+                    <div class="w-2.5 h-2.5 border border-stone-600 bg-stone-800 rounded-full"></div>
+                    <div class="w-2.5 h-2.5 border border-stone-600 bg-stone-800 rounded-full"></div>
+                    <div class="w-2.5 h-2.5 border border-stone-600 bg-stone-800 rounded-full"></div>
+                    <div class="w-2.5 h-2.5 border border-stone-600 bg-stone-800 rounded-full"></div>
+                    <div class="w-2.5 h-2.5 border border-stone-600 bg-stone-800 rounded-full"></div>
+                  </div>
+                  <!-- Метки питания -->
+                  <div class="flex justify-between w-full px-1 text-[9px] font-bold mt-1 text-stone-400">
+                    <span>+12V</span>
+                    <span>-12V (Red)</span>
+                  </div>
+                </div>
+
+                <!-- Подключаемый кабель -->
+                <div id="cable" class="w-40 h-10 border border-stone-400 dark:border-stone-600 rounded flex items-center justify-between relative px-2 transition-all duration-300 bg-stone-300 dark:bg-stone-800 text-stone-700 dark:text-stone-300 shadow-sm">
+                  <!-- Красная полоса, которая может быть слева или справа -->
+                  <div id="redStripe" class="absolute top-0 bottom-0 w-4 red-stripe rounded-l right-0 transition-all duration-300"></div>
+                  <span class="text-[9px] uppercase tracking-wider font-semibold z-10 select-none">Кабель питания</span>
+                  <span id="redStripeIndicator" class="text-[9px] font-bold text-red-500 z-10 mr-1 select-none">◄ -12V</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Управление кабелем -->
+            <div class="mt-4 flex gap-2">
+              <button id="flipCableBtn" class="flex-1 bg-stone-200 dark:bg-stone-800 border border-synth-border-light dark:border-synth-border-dark text-xs uppercase font-bold py-2 rounded hover:border-amber-500 transition-colors">
+                Перевернуть кабель
+              </button>
+              <button id="plugBtn" class="flex-1 bg-amber-600 hover:bg-amber-500 text-white text-xs uppercase font-bold py-2 rounded transition-colors shadow">
+                Подключить
+              </button>
+            </div>
+            <!-- Описание состояния подключения -->
+            <p id="powerStatus" class="text-[11px] text-stone-500 mt-2 text-center uppercase tracking-wider">Кабель отключен. Проверьте полярность.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 5: ЧЕК-ЛИСТ БЕЗОПАСНОСТИ И SAFETY SCORE (SAFETY CHECKLIST) -->
+    <section id="safety" class="relative border-2 border-synth-border-light dark:border-synth-border-dark bg-synth-panel-light dark:bg-synth-panel-dark rounded-xl p-6 mb-8 shadow-md">
+      <!-- Декоративные винты -->
+      <div class="absolute top-2 left-2 w-3 h-3 rounded-full border border-stone-400 dark:border-stone-600 flex items-center justify-center"><div class="w-2 h-[1px] bg-stone-400 dark:bg-stone-600 rotate-45"></div></div>
+      <div class="absolute top-2 right-2 w-3 h-3 rounded-full border border-stone-400 dark:border-stone-600 flex items-center justify-center"><div class="w-2 h-[1px] bg-stone-400 dark:bg-stone-600 -rotate-45"></div></div>
+
+      <div class="border-b border-synth-border-light dark:border-synth-border-dark pb-4 mb-6">
+        <h2 class="text-xl font-bold uppercase tracking-wide text-amber-600 dark:text-amber-500 flex items-center gap-2">
+          <span>05 //</span> ИНТЕРАКТИВНЫЙ КОНСОЛЬНЫЙ ЧЕК-ЛИСТ БЕЗОПАСНОСТИ
+        </h2>
+        <p class="text-xs text-stone-500 dark:text-stone-400 mt-1">Используйте этот чек-лист перед отправкой средств частному продавцу.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Чек-лист -->
+        <div class="lg:col-span-7 space-y-3 text-stone-900 dark:text-stone-100">
+          <h3 class="text-xs uppercase tracking-widest font-bold text-stone-500 mb-3 border-b border-synth-border-light dark:border-synth-border-dark pb-2">Шаги проверки сделки</h3>
+          
+          <label class="flex items-start gap-3 p-3 bg-stone-100 dark:bg-stone-900 border border-synth-border-light dark:border-synth-border-dark hover:border-amber-500 dark:hover:border-amber-500 rounded-lg cursor-pointer hover:bg-stone-200 dark:hover:bg-stone-800 transition-colors">
+            <input type="checkbox" id="check-1" class="mt-1 accent-amber-500 h-4 w-4 rounded">
+            <div>
+              <span class="text-xs font-bold uppercase block">1. Фото с таймстампом (Timestamp)</span>
+              <span class="text-[11px] text-stone-500 block leading-relaxed">Попросите продавца написать на бумаге ваше имя, текущую дату и положить её рядом с модулем. Это исключает использование чужих фотографий мошенниками.</span>
+            </div>
+          </label>
+
+          <label class="flex items-start gap-3 p-3 bg-stone-100 dark:bg-stone-900 border border-synth-border-light dark:border-synth-border-dark hover:border-amber-500 dark:hover:border-amber-500 rounded-lg cursor-pointer hover:bg-stone-200 dark:hover:bg-stone-800 transition-colors">
+            <input type="checkbox" id="check-2" class="mt-1 accent-amber-500 h-4 w-4 rounded">
+            <div>
+              <span class="text-xs font-bold uppercase block">2. Оплата через PayPal Goods & Services</span>
+              <span class="text-[11px] text-stone-500 block leading-relaxed">
+                НИКОГДА не используйте Friends & Family. Плата за комиссию PayPal G&S обеспечивает защиту покупателя. Изучите <a href="https://www.paypal.com/webapps/mpp/paypal-safety-and-security" target="_blank" class="text-amber-500 hover:underline font-bold">Политику защиты покупателей PayPal</a>.
+              </span>
+            </div>
+          </label>
+
+          <label class="flex items-start gap-3 p-3 bg-stone-100 dark:bg-stone-900 border border-synth-border-light dark:border-synth-border-dark hover:border-amber-500 dark:hover:border-amber-500 rounded-lg cursor-pointer hover:bg-stone-200 dark:hover:bg-stone-800 transition-colors">
+            <input type="checkbox" id="check-3" class="mt-1 accent-amber-500 h-4 w-4 rounded">
+            <div>
+              <span class="text-xs font-bold uppercase block">3. Проверка репутации продавца</span>
+              <span class="text-[11px] text-stone-500 block leading-relaxed">
+                Проверьте аккаунт на ModularGrid или ModWiggler. Ознакомьтесь с <a href="https://www.modwiggler.com/forum/viewforum.php?f=44" target="_blank" class="text-amber-500 hover:underline font-bold">Черным списком и правилами форума ModWiggler</a>.
+              </span>
+            </div>
+          </label>
+
+          <label class="flex items-start gap-3 p-3 bg-stone-100 dark:bg-stone-900 border border-synth-border-light dark:border-synth-border-dark hover:border-amber-500 dark:hover:border-amber-500 rounded-lg cursor-pointer hover:bg-stone-200 dark:hover:bg-stone-800 transition-colors">
+            <input type="checkbox" id="check-4" class="mt-1 accent-amber-500 h-4 w-4 rounded">
+            <div>
+              <span class="text-xs font-bold uppercase block">4. Запрос видео работоспособности</span>
+              <span class="text-[11px] text-stone-500 block leading-relaxed">Попросите продавца записать короткое видео, где он переключает регуляторы и подает сигнал. Это доказывает, что модуль технически исправен.</span>
+            </div>
+          </label>
+
+          <label class="flex items-start gap-3 p-3 bg-stone-100 dark:bg-stone-900 border border-synth-border-light dark:border-synth-border-dark hover:border-amber-500 dark:hover:border-amber-500 rounded-lg cursor-pointer hover:bg-stone-200 dark:hover:bg-stone-800 transition-colors">
+            <input type="checkbox" id="check-5" class="mt-1 accent-amber-500 h-4 w-4 rounded">
+            <div>
+              <span class="text-xs font-bold uppercase block">5. Оценка надежности упаковки</span>
+              <span class="text-[11px] text-stone-500 block leading-relaxed">Убедитесь, что продавец упакует плату в антистатический пакет и прочную коробку с бабл-пленкой. Повреждения потенциометров при транспортировке частая проблема.</span>
+            </div>
+          </label>
+        </div>
+
+        <!-- Индикатор Safety Score -->
+        <div class="lg:col-span-5 flex flex-col justify-between">
+          <div class="bg-stone-100 dark:bg-stone-900 border border-synth-border-light dark:border-synth-border-dark rounded-lg p-5 h-full flex flex-col justify-between">
+            <div>
+              <h3 class="text-xs uppercase tracking-widest font-bold text-stone-500 mb-4 border-b border-synth-border-light dark:border-synth-border-dark pb-2">Индикатор безопасности сделки</h3>
+              <p class="text-xs text-stone-500 mb-6">Заполняйте пункты чек-листа слева. Наша аналоговая шкала безопасности отобразит текущий уровень надежности планируемой покупки.</p>
+            </div>
+
+            <!-- Скевоморфный VU-Meter / LED-Индикатор безопасности -->
+            <div class="bg-stone-200 dark:bg-stone-950 border border-stone-300 dark:border-stone-800 rounded-lg p-4 flex flex-col items-center gap-4">
+              <span class="text-[10px] uppercase font-bold tracking-widest text-stone-500">Safety Level Index</span>
+              
+              <!-- 5 LED-индикаторов -->
+              <div class="flex gap-3 justify-center w-full max-w-xs">
+                <div class="flex flex-col items-center gap-1 flex-1">
+                  <div id="led-1" class="w-full h-3 rounded bg-stone-300 dark:bg-stone-800 transition-all duration-300"></div>
+                  <span class="text-[8px] font-bold text-stone-500">20%</span>
+                </div>
+                <div class="flex flex-col items-center gap-1 flex-1">
+                  <div id="led-2" class="w-full h-3 rounded bg-stone-300 dark:bg-stone-800 transition-all duration-300"></div>
+                  <span class="text-[8px] font-bold text-stone-500">40%</span>
+                </div>
+                <div class="flex flex-col items-center gap-1 flex-1">
+                  <div id="led-3" class="w-full h-3 rounded bg-stone-300 dark:bg-stone-800 transition-all duration-300"></div>
+                  <span class="text-[8px] font-bold text-stone-500">60%</span>
+                </div>
+                <div class="flex flex-col items-center gap-1 flex-1">
+                  <div id="led-4" class="w-full h-3 rounded bg-stone-300 dark:bg-stone-800 transition-all duration-300"></div>
+                  <span class="text-[8px] font-bold text-stone-500">80%</span>
+                </div>
+                <div class="flex flex-col items-center gap-1 flex-1">
+                  <div id="led-5" class="w-full h-3 rounded bg-stone-300 dark:bg-stone-800 transition-all duration-300"></div>
+                  <span class="text-[8px] font-bold text-stone-500">100%</span>
+                </div>
+              </div>
+
+              <!-- Текстовое описание уровня риска -->
+              <div class="text-center mt-2 w-full">
+                <div id="safetyStatusText" class="text-xs uppercase font-bold text-red-500 tracking-wider">Критический уровень риска</div>
+                <div id="safetyAdviseText" class="text-[10px] text-stone-500 dark:text-stone-400 mt-1">Обязательно запросите фото с подтверждением даты.</div>
+              </div>
+            </div>
+
+            <button id="resetChecklistBtn" class="mt-4 w-full bg-stone-200 dark:bg-stone-800 border border-synth-border-light dark:border-synth-border-dark text-xs uppercase font-bold py-2 rounded hover:border-amber-500 transition-colors">
+              Сбросить состояние
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ПЛАВАЮЩАЯ ПАТЧ-ПАНЕЛЬ НАВИГАЦИИ (FLOATING CONTROL PANEL) -->
+  <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-synth-panel-light/95 dark:bg-synth-panel-dark/95 border-2 border-synth-border-light dark:border-synth-border-dark rounded-full px-6 py-3 shadow-xl backdrop-blur flex items-center gap-6 z-50">
+    <div class="flex items-center gap-4">
+      <div class="flex flex-col items-center">
+        <a href="#overview" class="w-7 h-7 rounded-full border-2 border-stone-400 dark:border-stone-600 bg-stone-200 dark:bg-stone-800 flex items-center justify-center shadow-inner cursor-pointer hover:border-amber-500 transition-colors">
+          <div class="w-3.5 h-3.5 rounded-full bg-stone-900 dark:bg-stone-950"></div>
+        </a>
+        <span class="text-[8px] font-bold uppercase tracking-wider text-stone-500 mt-1">Обзор</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <a href="#channels" class="w-7 h-7 rounded-full border-2 border-stone-400 dark:border-stone-600 bg-stone-200 dark:bg-stone-800 flex items-center justify-center shadow-inner cursor-pointer hover:border-amber-500 transition-colors">
+          <div class="w-3.5 h-3.5 rounded-full bg-stone-900 dark:bg-stone-950"></div>
+        </a>
+        <span class="text-[8px] font-bold uppercase tracking-wider text-stone-500 mt-1">Каналы</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <a href="#calculator" class="w-7 h-7 rounded-full border-2 border-stone-400 dark:border-stone-600 bg-stone-200 dark:bg-stone-800 flex items-center justify-center shadow-inner cursor-pointer hover:border-amber-500 transition-colors">
+          <div class="w-3.5 h-3.5 rounded-full bg-stone-900 dark:bg-stone-950"></div>
+        </a>
+        <span class="text-[8px] font-bold uppercase tracking-wider text-stone-500 mt-1">Выгода</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <a href="#technical" class="w-7 h-7 rounded-full border-2 border-stone-400 dark:border-stone-600 bg-stone-200 dark:bg-stone-800 flex items-center justify-center shadow-inner cursor-pointer hover:border-amber-500 transition-colors">
+          <div class="w-3.5 h-3.5 rounded-full bg-stone-900 dark:bg-stone-950"></div>
+        </a>
+        <span class="text-[8px] font-bold uppercase tracking-wider text-stone-500 mt-1">Питание</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <a href="#safety" class="w-7 h-7 rounded-full border-2 border-stone-400 dark:border-stone-600 bg-stone-200 dark:bg-stone-800 flex items-center justify-center shadow-inner cursor-pointer hover:border-amber-500 transition-colors">
+          <div class="w-3.5 h-3.5 rounded-full bg-stone-900 dark:bg-stone-950"></div>
+        </a>
+        <span class="text-[8px] font-bold uppercase tracking-wider text-stone-500 mt-1">Безопасность</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Скрипт всплывающих подсказок (Tooltip) -->
+  <div id="tooltip" class="absolute hidden bg-stone-900 text-stone-100 text-[10px] uppercase font-bold p-2.5 rounded shadow-lg border border-stone-700 z-50 max-w-xs pointer-events-none transition-opacity duration-200"></div>
+
+  <!-- Главный скрипт логики, загружаемый через Vite -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
