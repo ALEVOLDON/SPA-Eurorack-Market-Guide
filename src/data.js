@@ -12,7 +12,7 @@ export const channelsData = {
       desc: "Итальянский шоурум бутиковых и редких модулей. Персонализированный подход.",
       tags: ["IT", "B-stock", "Warranty"],
       features: "Гарантия на б/у технику, ручная диагностика плат перед продажей, возможность сдать свой модуль.",
-      url: "https://www.martinpas.it/collections/b-stock-ex-demo"
+      url: "https://www.martinpas.com/collections/used"
     },
     {
       name: "MIDI Amsterdam (NL)",
