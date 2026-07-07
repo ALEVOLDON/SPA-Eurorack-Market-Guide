@@ -5,14 +5,14 @@ export const channelsData = {
       desc: "Главный европейский хаб Eurorack в Берлине. Крупнейший ассортимент и надежность.",
       tags: ["DE", "B-stock", "Warranty"],
       features: "Официальный B-stock раздел с уценкой, гарантия 1 год на всё, опция Trade-in при покупке новых модулей.",
-      url: "https://www.schneidersladen.de/de/gebraucht-b-stock/"
+      url: "https://schneidersladen.de/b-stock"
     },
     {
       name: "Martin Pas (IT)",
       desc: "Итальянский шоурум бутиковых и редких модулей. Персонализированный подход.",
       tags: ["IT", "B-stock", "Warranty"],
       features: "Гарантия на б/у технику, ручная диагностика плат перед продажей, возможность сдать свой модуль.",
-      url: "https://martinpas.com/collections/used-gear"
+      url: "https://martinpas.com"
     },
     {
       name: "MIDI Amsterdam (NL)",
@@ -35,7 +35,7 @@ export const channelsData = {
       desc: "Крупнейшая мировая база данных. Объявления о продаже от частных лиц.",
       tags: ["Escrow"],
       features: "Огромная база пользователей. Рекомендуется проверять отзывы и историю прошлых продаж.",
-      url: "https://www.modulargrid.net/e/forum/market"
+      url: "https://www.modulargrid.net/e/offers"
     },
     {
       name: "Green Musicians",
@@ -72,7 +72,7 @@ export const channelsData = {
       desc: "Локальный сервис объявлений в Испании и Италии со своей доставкой.",
       tags: ["ES", "IT", "Escrow"],
       features: "Встроенная функция доставки с безопасной оплатой и защитой средств до проверки.",
-      url: "https://wallapop.com"
+      url: "https://es.wallapop.com/app/search?keywords=eurorack"
     },
     {
       name: "Midi.cz (CZ)",
