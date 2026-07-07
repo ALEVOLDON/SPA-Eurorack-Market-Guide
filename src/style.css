@@ -16,6 +16,8 @@
   --color-synth-red: #ef4444;
   --color-synth-red-glow: rgba(239, 68, 68, 0.5);
   --font-sans: "Space Grotesk", "Outfit", sans-serif;
+  /* xs breakpoint для очень маленьких экранов (> 480px) */
+  --breakpoint-xs: 30rem;
 }
 
 .dot-grid {
@@ -48,4 +50,29 @@
     #1c1917 6px,
     #1c1917 12px
   );
+}
+
+/* Скрытие полосы прокрутки для вкладок на мобильном */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Запас снизу чтобы плавающая навигация не перекрывала контент */
+html {
+  scroll-padding-bottom: 80px;
+}
+
+/* Улучшенный скроллинг на iOS */
+body {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: none;
+}
+
+/* Убираем подсветку при тапе на мобильных webkit */
+* {
+  -webkit-tap-highlight-color: transparent;
 }

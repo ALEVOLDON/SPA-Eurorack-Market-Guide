@@ -73,6 +73,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Подключение всплывающих подсказок (Tooltips)
   setupTooltips();
+
+  // Настройка мобильного меню
+  setupMobileMenu();
+
+  // Настройка кнопки наверх
+  setupScrollToTop();
 });
 
 // Функция переключения тем оформления
@@ -92,12 +98,16 @@ function toggleTheme() {
 function updateThemeUI(isDark) {
   const knob = document.getElementById('themeToggleKnob');
   const led = document.getElementById('themeLed');
+  // На мобильном переключатель w-10, на десктопе w-12 → разный сдвиг ноба
+  const isMobile = window.innerWidth < 640;
+  const translateClass = isMobile ? 'translate-x-4' : 'translate-x-6';
   if (isDark) {
-    knob.classList.add('translate-x-6');
+    knob.classList.remove('translate-x-4', 'translate-x-6');
+    knob.classList.add(translateClass);
     led.classList.remove('bg-stone-400');
     led.classList.add('bg-amber-500', 'led-glow-amber');
   } else {
-    knob.classList.remove('translate-x-6');
+    knob.classList.remove('translate-x-4', 'translate-x-6');
     led.classList.add('bg-stone-400');
     led.classList.remove('bg-amber-500', 'led-glow-amber');
   }
@@ -490,29 +500,151 @@ function resetChecklist() {
 
 // Настройка всплывающих подсказок (Tooltips)
 function setupTooltips() {
-  document.addEventListener('mouseover', (e) => {
-    // Проверяем, навели ли на кнопку-фильтр или интерактивную ссылку с подходящим текстом
-    const isTag = e.target.classList.contains('tag-btn') || e.target.tagName === 'A';
-    if (isTag) {
-      const text = e.target.textContent.trim().split(' ')[0].replace('(', '').replace(')', '');
-      const tooltipText = tooltipsData[text];
-      if (tooltipText) {
-        const tooltip = document.getElementById('tooltip');
-        tooltip.textContent = tooltipText;
-        tooltip.classList.remove('hidden');
-        
-        const rect = e.target.getBoundingClientRect();
-        tooltip.style.left = `${rect.left + window.scrollX}px`;
-        tooltip.style.top = `${rect.bottom + window.scrollY + 8}px`;
-      }
-    }
-  });
+  const tooltip = document.getElementById('tooltip');
+  let touchTimeout = null;
 
+  const showTooltip = (target) => {
+    const isTag = target.classList.contains('tag-btn') || target.tagName === 'A';
+    if (!isTag) return false;
+    const text = target.textContent.trim().split(' ')[0].replace('(', '').replace(')', '');
+    const tooltipText = tooltipsData[text];
+    if (!tooltipText) return false;
+
+    tooltip.textContent = tooltipText;
+    tooltip.classList.remove('hidden');
+
+    const rect = target.getBoundingClientRect();
+    const tooltipLeft = Math.min(rect.left + window.scrollX, window.innerWidth - 200);
+    tooltip.style.left = `${Math.max(8, tooltipLeft)}px`;
+    tooltip.style.top = `${rect.bottom + window.scrollY + 8}px`;
+    return true;
+  };
+
+  const hideTooltip = () => {
+    tooltip.classList.add('hidden');
+  };
+
+  // Mouse-события (десктоп)
+  document.addEventListener('mouseover', (e) => {
+    showTooltip(e.target);
+  });
   document.addEventListener('mouseout', (e) => {
     const isTag = e.target.classList.contains('tag-btn') || e.target.tagName === 'A';
-    if (isTag) {
-      document.getElementById('tooltip').classList.add('hidden');
+    if (isTag) hideTooltip();
+  });
+
+  // Touch-события (мобильный)
+  document.addEventListener('touchstart', (e) => {
+    const target = e.target;
+    if (showTooltip(target)) {
+      // Автоскрытие через 2 секунды
+      clearTimeout(touchTimeout);
+      touchTimeout = setTimeout(hideTooltip, 2000);
     }
+  }, { passive: true });
+
+  document.addEventListener('touchend', () => {
+    // Не скрываем сразу — даём пользователю прочитать подсказку
+  }, { passive: true });
+}
+// Мобильное меню (Drawer)
+function setupMobileMenu() {
+  const menuToggle = document.getElementById('menuToggle');
+  const menuClose = document.getElementById('menuClose');
+  const menuDrawer = document.getElementById('menuDrawer');
+  const menuOverlay = document.getElementById('menuOverlay');
+  const burgerLine1 = document.getElementById('burgerLine1');
+  const burgerLine2 = document.getElementById('burgerLine2');
+  const burgerLine3 = document.getElementById('burgerLine3');
+
+  if (!menuToggle || !menuDrawer) return;
+
+  let isOpen = false;
+
+  function openMenu() {
+    isOpen = true;
+    // Открыть drawer
+    menuDrawer.classList.remove('translate-x-full');
+    // Показать overlay
+    menuOverlay.classList.remove('opacity-0', 'pointer-events-none');
+    menuOverlay.classList.add('opacity-100');
+    // Анимация бургера → X
+    burgerLine1.style.transform = 'translateY(7px) rotate(45deg)';
+    burgerLine2.style.opacity = '0';
+    burgerLine3.style.transform = 'translateY(-7px) rotate(-45deg)';
+    // Блокировать скролл тела
+    document.body.style.overflow = 'hidden';
+    menuToggle.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeMenu() {
+    isOpen = false;
+    // Скрыть drawer
+    menuDrawer.classList.add('translate-x-full');
+    // Скрыть overlay
+    menuOverlay.classList.add('opacity-0', 'pointer-events-none');
+    menuOverlay.classList.remove('opacity-100');
+    // Анимация X → бургер
+    burgerLine1.style.transform = '';
+    burgerLine2.style.opacity = '';
+    burgerLine3.style.transform = '';
+    // Разблокировать скролл
+    document.body.style.overflow = '';
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
+
+  // Кнопка открытия (бургер)
+  menuToggle.addEventListener('click', () => {
+    isOpen ? closeMenu() : openMenu();
+  });
+
+  // Кнопка закрытия (X)
+  menuClose.addEventListener('click', closeMenu);
+
+  // Клик на overlay закрывает меню
+  menuOverlay.addEventListener('click', closeMenu);
+
+  // Клик по ссылке в меню — закрыть и прокрутить
+  document.querySelectorAll('.menu-nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      closeMenu();
+    });
+  });
+
+  // Закрытие по ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) closeMenu();
+  });
+
+  // Закрыть меню при изменении размера экрана (переход на десктоп)
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 640 && isOpen) closeMenu();
   });
 }
+
+// Кнопка прокрутки наверх
+function setupScrollToTop() {
+  const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+  if (!scrollToTopBtn) return;
+
+  // Показываем кнопку при прокрутке вниз на 300px
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      scrollToTopBtn.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+      scrollToTopBtn.classList.add('opacity-100', 'translate-y-0');
+    } else {
+      scrollToTopBtn.classList.remove('opacity-100', 'translate-y-0');
+      scrollToTopBtn.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+    }
+  }, { passive: true });
+
+  // Плавная прокрутка наверх при клике
+  scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+
 // eof
