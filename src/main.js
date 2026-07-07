@@ -792,7 +792,7 @@ function convertSelectsToCustom() {
 
       // Маленький LED-индикатор для выбранного элемента
       const led = document.createElement('span');
-      led.className = 'w-1.5 h-1.5 rounded-full bg-transparent flex-shrink-0 ml-2';
+      led.className = 'w-1.5 h-1.5 rounded-full bg-transparent flex-shrink-0 ml-2 custom-select-led';
       optDiv.appendChild(led);
 
       // Подсветка при инициализации
@@ -809,7 +809,7 @@ function convertSelectsToCustom() {
         // Сбрасываем стили у всех опций
         dropdown.querySelectorAll('.option-item').forEach(item => {
           item.classList.remove('bg-stone-100', 'dark:bg-stone-900', 'font-semibold', 'text-amber-500', 'dark:text-amber-500');
-          item.querySelector('.w-1.5').className = 'w-1.5 h-1.5 rounded-full bg-transparent flex-shrink-0 ml-2';
+          item.querySelector('.custom-select-led').className = 'w-1.5 h-1.5 rounded-full bg-transparent flex-shrink-0 ml-2 custom-select-led';
         });
         
         // Активируем выбранную
