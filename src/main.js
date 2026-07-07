@@ -68,6 +68,9 @@ window.addEventListener('DOMContentLoaded', () => {
   // Загрузка чек-листа из localStorage
   loadChecklist();
 
+  // Преобразование стандартных select в кастомные списки
+  convertSelectsToCustom();
+
   // Первоначальный расчет калькулятора
   updateCalculator();
 
@@ -704,6 +707,129 @@ function setupTabsScrolling() {
 
   // Первоначальный запуск
   setTimeout(updateArrows, 200);
+}
+
+// Преобразование стандартных select в красивые кастомные списки в стиле Eurorack
+function convertSelectsToCustom() {
+  const selects = document.querySelectorAll('select');
+  selects.forEach(select => {
+    if (select.classList.contains('custom-select-hidden')) return;
+
+    // Скрываем оригинальный select
+    select.style.display = 'none';
+    select.classList.add('custom-select-hidden');
+
+    // Обертка
+    const wrapper = document.createElement('div');
+    wrapper.className = 'relative w-full';
+
+    // Кнопка-триггер (выглядит как селектор на панели)
+    const trigger = document.createElement('button');
+    trigger.type = 'button';
+    trigger.className = 'w-full bg-white dark:bg-stone-950 border border-synth-border-light dark:border-synth-border-dark rounded p-2 text-stone-800 dark:text-stone-100 font-medium focus:ring-1 focus:ring-amber-500 outline-none flex justify-between items-center cursor-pointer select-none text-left text-xs sm:text-sm transition-all duration-200';
+    
+    const selectedOption = select.options[select.selectedIndex];
+    const textSpan = document.createElement('span');
+    textSpan.className = 'truncate pr-2';
+    textSpan.textContent = selectedOption ? selectedOption.textContent : '';
+    trigger.appendChild(textSpan);
+
+    // Стрелочка шеврона
+    const arrowSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    arrowSvg.setAttribute('class', 'w-4 h-4 text-stone-500 flex-shrink-0 transition-transform duration-200');
+    arrowSvg.setAttribute('fill', 'none');
+    arrowSvg.setAttribute('viewBox', '0 0 24 24');
+    arrowSvg.setAttribute('stroke', 'currentColor');
+    arrowSvg.setAttribute('stroke-width', '2');
+    arrowSvg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />';
+    trigger.appendChild(arrowSvg);
+
+    wrapper.appendChild(trigger);
+
+    // Выпадающее меню с опциями
+    const dropdown = document.createElement('div');
+    dropdown.className = 'absolute left-0 right-0 mt-1 bg-white dark:bg-stone-950 border border-synth-border-light dark:border-synth-border-dark rounded shadow-xl hidden z-20 max-h-60 overflow-y-auto custom-select-dropdown';
+
+    Array.from(select.options).forEach((opt, idx) => {
+      const optDiv = document.createElement('div');
+      optDiv.className = 'option-item p-2.5 hover:bg-stone-100 dark:hover:bg-stone-900 hover:text-amber-500 dark:hover:text-amber-500 cursor-pointer transition-colors text-xs sm:text-sm text-stone-800 dark:text-stone-200 select-none flex items-center justify-between';
+      
+      const valSpan = document.createElement('span');
+      valSpan.textContent = opt.textContent;
+      optDiv.appendChild(valSpan);
+
+      // Маленький LED-индикатор для выбранного элемента
+      const led = document.createElement('span');
+      led.className = 'w-1.5 h-1.5 rounded-full bg-transparent flex-shrink-0 ml-2';
+      optDiv.appendChild(led);
+
+      // Подсветка при инициализации
+      if (select.selectedIndex === idx) {
+        optDiv.classList.add('bg-stone-100', 'dark:bg-stone-900', 'font-semibold', 'text-amber-500', 'dark:text-amber-500');
+        led.classList.add('bg-amber-500', 'led-glow-amber');
+      }
+
+      optDiv.addEventListener('click', (e) => {
+        e.stopPropagation();
+        select.selectedIndex = idx;
+        textSpan.textContent = opt.textContent;
+        
+        // Сбрасываем стили у всех опций
+        dropdown.querySelectorAll('.option-item').forEach(item => {
+          item.classList.remove('bg-stone-100', 'dark:bg-stone-900', 'font-semibold', 'text-amber-500', 'dark:text-amber-500');
+          item.querySelector('.w-1.5').className = 'w-1.5 h-1.5 rounded-full bg-transparent flex-shrink-0 ml-2';
+        });
+        
+        // Активируем выбранную
+        optDiv.classList.add('bg-stone-100', 'dark:bg-stone-900', 'font-semibold', 'text-amber-500', 'dark:text-amber-500');
+        led.classList.add('bg-amber-500', 'led-glow-amber');
+
+        // Закрываем меню
+        dropdown.classList.add('hidden');
+        arrowSvg.classList.remove('rotate-180');
+
+        // Генерируем событие изменения, чтобы калькулятор пересчитал значения
+        select.dispatchEvent(new Event('change'));
+      });
+
+      dropdown.appendChild(optDiv);
+    });
+
+    wrapper.appendChild(dropdown);
+
+    // Открытие/закрытие меню по клику на кнопку
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      
+      // Закрываем все остальные открытые меню
+      document.querySelectorAll('.custom-select-dropdown').forEach(d => {
+        if (d !== dropdown) {
+          d.classList.add('hidden');
+          d.previousElementSibling.querySelector('svg').classList.remove('rotate-180');
+        }
+      });
+
+      const isHidden = dropdown.classList.contains('hidden');
+      if (isHidden) {
+        dropdown.classList.remove('hidden');
+        arrowSvg.classList.add('rotate-180');
+      } else {
+        dropdown.classList.add('hidden');
+        arrowSvg.classList.remove('rotate-180');
+      }
+    });
+
+    // Вставляем кастомный список в то же место DOM дерева
+    select.parentNode.insertBefore(wrapper, select);
+  });
+
+  // Закрытие выпадающих списков при клике в любом другом месте экрана
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.custom-select-dropdown').forEach(d => {
+      d.classList.add('hidden');
+      d.previousElementSibling.querySelector('svg').classList.remove('rotate-180');
+    });
+  });
 }
 
 // eof
