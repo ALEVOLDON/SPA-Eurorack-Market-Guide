@@ -266,6 +266,38 @@ function updateCalculator() {
   const shipping = parseFloat(document.getElementById('calcShipping').value) || 0;
   const usePaypal = document.getElementById('calcPaypal').checked;
 
+  // Динамически управляем доступностью полей ввода (доставка/PayPal) в зависимости от канала
+  const shippingInput = document.getElementById('calcShipping');
+  const paypalCheckbox = document.getElementById('calcPaypal');
+  const paypalLabel = paypalCheckbox.closest('label');
+  const shippingLabel = shippingInput.previousElementSibling;
+
+  if (channel === 'buyout' || channel === 'tradein') {
+    // В офлайн каналах (выкуп, трейд-ин) доставка и PayPal не применяются
+    shippingInput.disabled = true;
+    shippingInput.classList.add('opacity-40', 'pointer-events-none');
+    shippingLabel.classList.add('opacity-40');
+    
+    paypalCheckbox.disabled = true;
+    paypalLabel.classList.add('opacity-40', 'pointer-events-none');
+  } else if (channel === 'commission') {
+    // При комиссии агента есть доставка, но нет комиссии PayPal (агент берет фиксу/процент)
+    shippingInput.disabled = false;
+    shippingInput.classList.remove('opacity-40', 'pointer-events-none');
+    shippingLabel.classList.remove('opacity-40');
+
+    paypalCheckbox.disabled = true;
+    paypalLabel.classList.add('opacity-40', 'pointer-events-none');
+  } else if (channel === 'p2p') {
+    // При прямой P2P продаже применяется и доставка, и комиссия PayPal
+    shippingInput.disabled = false;
+    shippingInput.classList.remove('opacity-40', 'pointer-events-none');
+    shippingLabel.classList.remove('opacity-40');
+
+    paypalCheckbox.disabled = false;
+    paypalLabel.classList.remove('opacity-40', 'pointer-events-none');
+  }
+
   // Модификатор состояния
   let conditionMod = 0.8;
   if (condition === 'mint') conditionMod = 0.9;
