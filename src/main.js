@@ -743,6 +743,19 @@ function setupTabsScrolling() {
 
 // Преобразование стандартных select в красивые кастомные списки в стиле Eurorack
 function convertSelectsToCustom() {
+  const optionDescriptions = {
+    // Состояния модуля
+    'mint': 'Как новый, без малейших следов использования. Полный комплект (коробка, кабель, винты).',
+    'excellent': 'Отличное состояние, возможен минимальный rack rash (следы от винтов). Коробка в наличии.',
+    'good': 'Есть заметный rack rash, царапины на панели. Коробка отсутствует, но технически все супер.',
+    'poor': 'Сильные царапины, потертости, плохой внешний вид. Полностью исправен электрически.',
+    // Способы продажи
+    'buyout': 'Срочная продажа магазину. Деньги выплачиваются моментально, но вы теряете половину стоимости.',
+    'tradein': 'Обмен старого модуля на скидку (store credit) в магазине при покупке нового девайса.',
+    'commission': 'Продажа через комиссионку. Магазин берет комиссию, вы получаете деньги только после продажи.',
+    'p2p': 'Прямая сделка с музыкантом (форумы, чаты). Максимальный доход, требует времени и защиты PayPal.'
+  };
+
   const selects = document.querySelectorAll('select');
   selects.forEach(select => {
     if (select.classList.contains('custom-select-hidden')) return;
@@ -784,15 +797,28 @@ function convertSelectsToCustom() {
 
     Array.from(select.options).forEach((opt, idx) => {
       const optDiv = document.createElement('div');
-      optDiv.className = 'option-item p-2.5 hover:bg-stone-100 dark:hover:bg-stone-900 hover:text-amber-500 dark:hover:text-amber-500 cursor-pointer transition-colors text-xs sm:text-sm text-stone-800 dark:text-stone-200 select-none flex items-center justify-between';
+      optDiv.className = 'option-item p-2.5 border-b border-stone-100 dark:border-stone-900 last:border-0 hover:bg-stone-100 dark:hover:bg-stone-900 hover:text-amber-500 dark:hover:text-amber-500 cursor-pointer transition-colors text-stone-800 dark:text-stone-200 select-none flex items-center justify-between';
       
+      const contentWrapper = document.createElement('div');
+      contentWrapper.className = 'flex flex-col pr-3 min-w-0';
+
       const valSpan = document.createElement('span');
+      valSpan.className = 'text-xs sm:text-sm font-semibold';
       valSpan.textContent = opt.textContent;
-      optDiv.appendChild(valSpan);
+      contentWrapper.appendChild(valSpan);
+
+      const desc = optionDescriptions[opt.value];
+      if (desc) {
+        const descSpan = document.createElement('span');
+        descSpan.className = 'text-[10px] text-stone-500 dark:text-stone-400 mt-0.5 leading-relaxed font-normal normal-case';
+        descSpan.textContent = desc;
+        contentWrapper.appendChild(descSpan);
+      }
+      optDiv.appendChild(contentWrapper);
 
       // Маленький LED-индикатор для выбранного элемента
       const led = document.createElement('span');
-      led.className = 'w-1.5 h-1.5 rounded-full bg-transparent flex-shrink-0 ml-2 custom-select-led';
+      led.className = 'w-1.5 h-1.5 rounded-full bg-transparent flex-shrink-0 ml-1.5 custom-select-led';
       optDiv.appendChild(led);
 
       // Подсветка при инициализации
@@ -809,7 +835,7 @@ function convertSelectsToCustom() {
         // Сбрасываем стили у всех опций
         dropdown.querySelectorAll('.option-item').forEach(item => {
           item.classList.remove('bg-stone-100', 'dark:bg-stone-900', 'font-semibold', 'text-amber-500', 'dark:text-amber-500');
-          item.querySelector('.custom-select-led').className = 'w-1.5 h-1.5 rounded-full bg-transparent flex-shrink-0 ml-2 custom-select-led';
+          item.querySelector('.custom-select-led').className = 'w-1.5 h-1.5 rounded-full bg-transparent flex-shrink-0 ml-1.5 custom-select-led';
         });
         
         // Активируем выбранную
