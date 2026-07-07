@@ -79,6 +79,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Настройка кнопки наверх
   setupScrollToTop();
+
+  // Настройка скролла вкладок на мобильном
+  setupTabsScrolling();
 });
 
 // Функция переключения тем оформления
@@ -645,6 +648,62 @@ function setupScrollToTop() {
       behavior: 'smooth'
     });
   });
+}
+
+// Управление прокруткой вкладок на мобильном (стрелки + градиент)
+function setupTabsScrolling() {
+  const container = document.getElementById('tabsScrollContainer');
+  const btnLeft = document.getElementById('tabsScrollLeft');
+  const btnRight = document.getElementById('tabsScrollRight');
+  if (!container || !btnLeft || !btnRight) return;
+
+  function updateArrows() {
+    const scrollLeft = container.scrollLeft;
+    // Округляем из-за субпиксельного рендеринга на ретина-экранах
+    const maxScroll = Math.max(0, container.scrollWidth - container.clientWidth);
+
+    // Стрелка влево
+    if (scrollLeft > 8) {
+      btnLeft.classList.remove('opacity-0', 'pointer-events-none');
+      btnLeft.classList.add('opacity-100');
+    } else {
+      btnLeft.classList.remove('opacity-100');
+      btnLeft.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    // Стрелка вправо
+    if (scrollLeft < maxScroll - 8) {
+      btnRight.classList.remove('opacity-0', 'pointer-events-none');
+      btnRight.classList.add('opacity-100');
+    } else {
+      btnRight.classList.remove('opacity-100');
+      btnRight.classList.add('opacity-0', 'pointer-events-none');
+    }
+  }
+
+  // Скролл по кнопкам
+  btnLeft.addEventListener('click', () => {
+    container.scrollBy({ left: -150, behavior: 'smooth' });
+  });
+
+  btnRight.addEventListener('click', () => {
+    container.scrollBy({ left: 150, behavior: 'smooth' });
+  });
+
+  // Отслеживание прокрутки и ресайза
+  container.addEventListener('scroll', updateArrows, { passive: true });
+  window.addEventListener('resize', updateArrows, { passive: true });
+
+  // Дополнительная проверка при смене вкладок
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Даем время на рендер перед проверкой
+      setTimeout(updateArrows, 100);
+    });
+  });
+
+  // Первоначальный запуск
+  setTimeout(updateArrows, 200);
 }
 
 // eof

@@ -124,9 +124,20 @@
         </div>
       </div>
 
-      <!-- Вкладки управления (Скевоморфный селектор) -->
-      <div class="-mx-4 sm:mx-0">
-        <div class="flex border-b border-synth-border-light dark:border-synth-border-dark mb-5 sm:mb-6 overflow-x-auto scrollbar-hide px-4 sm:px-0">
+      <!-- Вкладки управления (Скевоморфный селектор с индикаторами прокрутки) -->
+      <div class="-mx-4 sm:mx-0 relative">
+        <!-- Стрелка влево (показывается если прокручено вправо) -->
+        <button id="tabsScrollLeft" class="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-synth-panel-light dark:from-synth-panel-dark to-transparent text-stone-600 dark:text-stone-400 hover:text-amber-500 active:text-amber-500 z-10 flex items-center justify-start pl-2 sm:hidden opacity-0 pointer-events-none transition-opacity duration-200 touch-manipulation" aria-label="Прокрутить вкладки влево">
+          <svg class="w-5 h-5 drop-shadow-sm" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+        </button>
+
+        <!-- Стрелка вправо (показывается если есть куда прокрутить вправо) -->
+        <button id="tabsScrollRight" class="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-synth-panel-light dark:from-synth-panel-dark to-transparent text-stone-600 dark:text-stone-400 hover:text-amber-500 active:text-amber-500 z-10 flex items-center justify-end pr-2 sm:hidden transition-opacity duration-200 touch-manipulation" aria-label="Прокрутить вкладки вправо">
+          <svg class="w-5 h-5 drop-shadow-sm" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+        </button>
+
+        <!-- Контейнер вкладок -->
+        <div id="tabsScrollContainer" class="flex border-b border-synth-border-light dark:border-synth-border-dark mb-5 sm:mb-6 overflow-x-auto scrollbar-hide px-6 sm:px-0 scroll-smooth">
           <button id="tab-retailers" class="tab-btn flex-shrink-0 px-3 sm:px-4 py-3 sm:py-2.5 font-bold uppercase tracking-wider text-xs border-t-2 border-l-2 border-r-2 border-transparent text-stone-400 dark:text-stone-500 hover:text-stone-800 dark:hover:text-stone-200 transition-all duration-200 whitespace-nowrap touch-manipulation">
             Официальные Ритейлеры
           </button>
